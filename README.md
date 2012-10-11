@@ -1,4 +1,4 @@
-[W3 Audio API Editor's Draft](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html)
+[W3 Audio API Working Draft](http://www.w3.org/TR/2012/WD-webaudio-20120802/)
 
 Some experiments with the audio API. 
 
