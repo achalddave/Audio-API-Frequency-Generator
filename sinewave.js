@@ -11,7 +11,7 @@ var AudioContext = (function() {
 var context = new AudioContext();
 // deprecated noteOn/noteOff fix
 var tmpOscillator = context.createOscillator();
-if (typeof(tmpOscillator.start) == "undefined") {
+if (typeof(tmpOscillator.start) === "undefined") {
   tmpOscillator.constructor.prototype.start = tmpOscillator.constructor.prototype.noteOn;
   tmpOscillator.constructor.prototype.stop = tmpOscillator.constructor.prototype.noteOff;
 }
@@ -62,7 +62,7 @@ OscillatorWrapper.prototype.togglePlay = function() {
 }
 
 OscillatorWrapper.prototype.isPlaying = function() {
-  return typeof(this.oscillator) == "undefined" ? false : true;
+  return typeof(this.oscillator) === "undefined" ? false : true;
 }
 
 SineOscillator.prototype = new OscillatorWrapper;
