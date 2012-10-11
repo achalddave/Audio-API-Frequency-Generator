@@ -20,5 +20,6 @@ freqRange.onmouseup = function() {
   if (paused) {
     sineOscillator.setFrequency(freqRange.value);
     sineOscillator.play();
+    paused = false;
   }
 }
