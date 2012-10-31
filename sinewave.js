@@ -15,8 +15,6 @@ if (typeof(tmpOscillator.start) === "undefined") {
   tmpOscillator.constructor.prototype.start = tmpOscillator.constructor.prototype.noteOn;
   tmpOscillator.constructor.prototype.stop = tmpOscillator.constructor.prototype.noteOff;
 }
-delete context;
-delete tmpOscillator;
 
 function OscillatorWrapper(context) {
   this.context = context;
@@ -27,6 +25,7 @@ function OscillatorWrapper(context) {
 }
 
 OscillatorWrapper.prototype.setFrequency = function(frequency) {
+  console.log(frequency);
   this.frequency = frequency;
 }
 
@@ -34,6 +33,7 @@ OscillatorWrapper.prototype.play = function() {
   var context = this.context,
       oscillator = context.createOscillator();
 
+  console.log(this.frequency);
   oscillator.frequency.value = this.frequency || 440;
   oscillator.connect(context.destination);
 
@@ -47,10 +47,31 @@ OscillatorWrapper.prototype.play = function() {
   this.oscillator = oscillator;
 }
 
+/*
+OscillatorWrapper.prototype.pluck = function() {
+  var context = this.context,
+      oscillator = context.createOscillator();
+
+  oscillator.frequency.value = this.frequency || 440;
+  oscillator.connect(context.destination);
+
+  oscillator.type = oscillator[this.type];
+  if (this.wavetable) {
+    oscillator.setWaveTable(this.wavetable)
+  }
+
+  var filter = context.createBiquadFilter();
+  oscillator.start(0);
+
+  this.oscillator = oscillator;
+  
+}
+*/
+
 OscillatorWrapper.prototype.pause = function() {
   this.oscillator.stop(0);
   // can only start/stop once per oscillator node
-  delete this.oscillator; 
+  //delete this.oscillator; 
 }
 
 OscillatorWrapper.prototype.togglePlay = function() {
@@ -94,3 +115,4 @@ function WavetableSineOscillator(context) {
   console.log(this.wavetable);
   this.context = context;
 }
+
