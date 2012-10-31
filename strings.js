@@ -86,6 +86,7 @@ StringNote.prototype.setFrequency = function (frequency) {
   this.frequency = frequency;
 }
 
+/*
 StringNote.prototype.togglePlay = function () {
   console.log(this.playing);
   if (this.playing) {
@@ -94,3 +95,4 @@ StringNote.prototype.togglePlay = function () {
     this.play();
   }
 }
+*/

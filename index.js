@@ -13,5 +13,5 @@ sineButton.onclick = function () {
 
 stringButton.onclick = function () {
   stringNote.setFrequency(freq.value);
-  stringNote.togglePlay();
+  stringNote.play();
 }
