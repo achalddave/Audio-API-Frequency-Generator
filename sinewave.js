@@ -1,21 +1,4 @@
-// basic set up
-var AudioContext = (function() {
-  // cross browser some day?
-  return window.AudioContext ||
-          window.mozAudioContext ||
-          window.msAudioContext ||
-          window.oAudioContext ||
-          window.webkitAudioContext;
-})();
-
-var context = new AudioContext();
-// deprecated noteOn/noteOff fix
-var tmpOscillator = context.createOscillator();
-if (typeof(tmpOscillator.start) === "undefined") {
-  tmpOscillator.constructor.prototype.start = tmpOscillator.constructor.prototype.noteOn;
-  tmpOscillator.constructor.prototype.stop = tmpOscillator.constructor.prototype.noteOff;
-}
-
+// global context from audioSetup.js
 function OscillatorWrapper(context) {
   this.context = context;
   this.oscillator;
@@ -42,36 +25,14 @@ OscillatorWrapper.prototype.play = function() {
     oscillator.setWaveTable(this.wavetable)
   }
 
-  oscillator.start(0);
+  oscillator.noteOn(0);
 
   this.oscillator = oscillator;
 }
-
-/*
-OscillatorWrapper.prototype.pluck = function() {
-  var context = this.context,
-      oscillator = context.createOscillator();
-
-  oscillator.frequency.value = this.frequency || 440;
-  oscillator.connect(context.destination);
-
-  oscillator.type = oscillator[this.type];
-  if (this.wavetable) {
-    oscillator.setWaveTable(this.wavetable)
-  }
-
-  var filter = context.createBiquadFilter();
-  oscillator.start(0);
-
-  this.oscillator = oscillator;
-  
-}
-*/
 
 OscillatorWrapper.prototype.pause = function() {
-  this.oscillator.stop(0);
-  // can only start/stop once per oscillator node
-  //delete this.oscillator; 
+  this.oscillator.noteOff(0);
+  // can only play once per oscillator node
 }
 
 OscillatorWrapper.prototype.togglePlay = function() {

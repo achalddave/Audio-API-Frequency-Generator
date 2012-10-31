@@ -1,31 +1,17 @@
 var context = new AudioContext(), // AND THEN THERE WAS SOUND
-    sineOscillator = new SineOscillator(context);
+    sineOscillator = new SineOscillator(context),
+    stringNote = new StringNote();
 
-gsine = sineOscillator;
+var freq = document.getElementById("freq"),
+    sineButton = document.getElementById("sinewave"),
+    stringButton = document.getElementById("strings");
 
-var freqRange = document.getElementById("freq"),
-    playButton = document.getElementById("play");
-
-playButton.onclick = function() {
-  sineOscillator.setFrequency(freqRange.value)
+sineButton.onclick = function () {
+  sineOscillator.setFrequency(freq.value)
   sineOscillator.togglePlay();
 }
 
-freqRange.onmousedown = function() {
-  if (sineOscillator.isPlaying()) {
-    paused = true;
-    sineOscillator.pause();
-  }
+stringButton.onclick = function () {
+  stringNote.setFrequency(freq.value);
+  stringNote.togglePlay();
 }
-
-freqRange.onmouseup = function() {
-  if (typeof paused !== "undefined" && paused) {
-    sineOscillator.setFrequency(440);
-    sineOscillator.play();
-    paused = false;
-  }
-}
-
-// STRINGS
-var stringButton = document.getElementById('strings');
-stringButton.onclick = runStrings;

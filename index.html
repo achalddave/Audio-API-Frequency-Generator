@@ -1,13 +1,16 @@
 <html>
 <body>
+<script src="audioSetup.js"></script>
 <script src="sinewave.js"></script>
 <script src="strings.js"></script>
-<!--
-  Basic audio controls here
--->
-<input type="range" min="0" max="1000" step="100" id="freq"></input>
-<button id="play">Play something</button>
-<button id="strings">Try strings</button>
+
+<div id="freqSelector">
+  <span>Frequency:</span>
+  <input type="number" id="freq" value="440"></input>
+</div>
+<button id="sinewave">Play Sine Wave</button>
+<button id="strings">Play String</button>
+
 <script src="index.js"></script>
 </body>
 </html>
