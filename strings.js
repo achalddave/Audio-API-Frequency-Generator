@@ -1,12 +1,13 @@
 function runStrings() {
-  var frequency = 220;
+  var frequency = 220; // frequency you want to play
+                       // this is not tuned properly :(
 
   var context = new webkitAudioContext();
   var destination = context.destination;
 
   var delaySamples = (context.sampleRate / frequency);
-  // delaySamples should be less than this almost all the time
-  // (only need more samples if frequency is lower than 21
+  
+  // bufferSize needs to be larger than the delay
   var bufferSize = 2048;
   if (delaySamples > bufferSize) {
     alert("I can't play that frequency...");
@@ -18,25 +19,21 @@ function runStrings() {
   bufferSource.buffer = buffer;
 
   var bufferData = buffer.getChannelData(0);
-  console.log(delaySamples);
   for (var i = 0; i < delaySamples+1; i++) {
     bufferData[i] = 2*(Math.random()-0.5); // random noise
   }
 
   var delayNode = context.createDelayNode(); //delay filter
-  //var delaySeconds = (delaySamples/context.sampleRate);
-  var delaySeconds = 1/(frequency);
-  console.log(delaySamples, delaySeconds);
-  delayNode.delayTime.value = delaySeconds; // delay time
+  var delaySeconds = 1/(frequency); // delaySamples/context.sampleRate
+  delayNode.delayTime.value = delaySeconds;
 
-  var lowpassFilter = context.createBiquadFilter(); // lowpass
-  lowpassFilter.type = lowpassFilter.LOWPASS;
-  lowpassFilter.frequency.value = 20000;
+  var lowpassFilter = context.createBiquadFilter();
+  lowpassFilter.frequency.value = 20000; // make things sound better
 
   var gainNode = context.createGainNode();
-  gainNode.gain.value = 0.996;
+  gainNode.gain.value = 0.996; // mostly for string to die off quicker
 
-  //bufferSource.loop = true;
+  // see diagram: http://upload.wikimedia.org/wikipedia/commons/9/9d/Karplus-strong-schematic.png
   bufferSource.connect(destination);
   bufferSource.connect(delayNode);
   delayNode.connect(lowpassFilter);
@@ -44,7 +41,5 @@ function runStrings() {
   gainNode.connect(delayNode);
   gainNode.connect(destination);
 
-  //delayNode.connect(destination);
-  //delayNode.connect(delayNode);
   bufferSource.noteOn(0);
 }
