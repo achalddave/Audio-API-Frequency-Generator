@@ -33,6 +33,7 @@ OscillatorWrapper.prototype.play = function() {
 OscillatorWrapper.prototype.pause = function() {
   this.oscillator.noteOff(0);
   // can only play once per oscillator node
+  this.oscillator = null;
 }
 
 OscillatorWrapper.prototype.togglePlay = function() {
@@ -44,7 +45,7 @@ OscillatorWrapper.prototype.togglePlay = function() {
 }
 
 OscillatorWrapper.prototype.isPlaying = function() {
-  return typeof(this.oscillator) === "undefined" ? false : true;
+  return this.oscillator ? true : false;
 }
 
 SineOscillator.prototype = new OscillatorWrapper;
