@@ -2,9 +2,7 @@
 function StringNote (frequency) {
   this.frequency = typeof frequency === "undefined" ? 440 : frequency;
   this.context = context;
-  this.delaySamples = (context.sampleRate / this.frequency);
   this.node = context.createJavaScriptNode(4096, 0, 1);
-  this.N = context.sampleRate / this.frequency;
   this.playing = false;
 
 }
@@ -44,6 +42,7 @@ StringNote.prototype.pause = function () {
 
 StringNote.prototype.setFrequency = function (frequency) {
   this.frequency = frequency;
+  this.N = context.sampleRate / frequency;
 }
 
 /*
